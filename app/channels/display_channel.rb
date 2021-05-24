@@ -1,4 +1,4 @@
-class ChatroomChannel < ApplicationCable::Channel
+class DisplayChannel < ApplicationCable::Channel
   def subscribed
 
     stream_for group_message
@@ -10,7 +10,7 @@ class ChatroomChannel < ApplicationCable::Channel
   end
 
   def group_message
-
+    
     GroupMessage.find(params[:group_id])
   end
 

@@ -2,10 +2,18 @@
   <i class="circular purple bullhorn icon"></i>
   Chatroom
 </h4>
-
 <div class="ui two column grid">
   <div class="twelve wide column">
     <div class="ui fluid raised card chatbox">
+      <div class="row ui feed">
+      <div class="ui feed", id = "group-messages", data-channel-subscribe = "ChatroomChannel", data_group_id ="<%= current_group.id %>"  ><h4>
+      <% if current_group.bilateral == false %>
+        <%= current_group.groupname %>
+      <% else %>
+        <%= friend_name(current_group.groupname) %>
+      <% end %>    
+      </h4></div>
+    </div>
       <div class="content", id= 'messages'>
         <div class="ui feed" id="message-container">
           <%= render @messages %>
@@ -15,7 +23,8 @@
       <%= form_for(@message, html: {class:"ui reply form", role: "form"}, url: message_path, remote: true) do |f| %>
           <div class="field">
             <div class="ui fluid icon input ">
-              <%= f.text_field :body, placeholder: "Say something..."%>
+            <%=f.hidden_field :group_message_id, value: current_group.id %>
+              <%= f.text_area :body, placeholder: "Say something..." , rows: 2 %>
               <%=f.button '<i class= "bordered inverted purple edit icon"></i>'.html_safe %>
             </div>
           </div>
@@ -23,22 +32,22 @@
       </div>
     </div>
     </div>
-
-
   <div class="four wide column">
     <div class="ui fluid raised card chatbox">
-      <div class="content">
-          <div class="ui inverted vertical menu">
-            <a class="active item">
-              Home
-            </a>
-            <a class="item">
-              Messages
-            </a>
-            <a class="item">
-              Friends
-            </a>
+      <div class="ui fluid vertical menu" , id = "group-display", data-channel-subscribe = "DisplayChannel", data_group_id ="<%= @group %>">
+          <% @displays.each do |display| %>
+      <div class="content", id = "<%= display.group_message_id%>" , data-channel-subscribe = "DisplayChannel", attr ="<%= display.group_message_id %>">
+          <%= form_for(:session, html: {class: "ui form", role: "form"}, url: display_path) do |m| %>
+          <%=m.hidden_field :group_message_id, value: display.group_message.id %>
+          <a class="item">
+          <h4 class="ui header">
+          <%=m.submit display.group_message.bilateral ? friend_name(display.group_message.groupname) : display.group_message.groupname %></h4>
+          <em id= "side-<%= display.group_message_id%>-mess"><%= display.user.username %> : <%= display.body %></em>
+          </a>
+          <% end %>
           </div>
+          <% end %>
+      </div>
         </div>
       </div>
     </div>

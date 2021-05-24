@@ -1,16 +1,23 @@
 class MessagesController < ApplicationController
 
   def create
+
     message = current_user.messages.build(message_params)
+    
     if message.save
-      ActionCable.server.broadcast  "chatroom_channel", ms: message_render(message)
+      m = message_render(message)
+
+      group = message.group_message
+      ChatroomChannel.broadcast_to  group , ms: m
+      DisplayChannel.broadcast_to group , dp: m, gr: message.group_message_id
+      
     end
   end
 
   private
 
   def message_params
-    params.require(:message).permit(:body)
+    params.require(:message).permit(:body,:group_message_id)
   end
 
   def message_render(message)

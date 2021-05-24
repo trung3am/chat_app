@@ -1,8 +1,11 @@
 import consumer from "./consumer"
 
 
-
-consumer.subscriptions.create("ChatroomChannel", {
+$(document).on('turbolinks:load', function() {
+consumer.subscriptions.create(
+  {channel: "ChatroomChannel",
+  group_id: $('#group-messages').attr('data_group_id')
+}, {
   connected() {
     // Called when the subscription is ready for use on the server
   },
@@ -20,3 +23,4 @@ consumer.subscriptions.create("ChatroomChannel", {
 
   }
 }); 
+})
