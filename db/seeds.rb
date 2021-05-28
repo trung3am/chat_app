@@ -8,16 +8,16 @@
 
 
 
-User.create(username: 'system', password: '123', email:'tqtrung1209@gmail.com' )
+User.create(username: 'System', password: 'trungdeptrai', email:'tqtrung1209@gmail.com' )
 User.create(username: 'john', password: '123', email:'john@gmail.com' )
 User.create(username: 'doe', password: '123', email:'doe@gmail.com' )
 User.create(username: 'minh', password: '123' , email:'minh@gmail.com')
 User.create(username: 'trung', password: '123' , email:'trung@gmail.com')
 
-GroupMessage.create(groupname: "Lobby")
-GroupMessage.create(groupname: "group3")
-GroupMessage.create(groupname: "group4")
-GroupMessage.create(groupname: "group4")
+GroupMessage.create(groupname: "Lobby", groupadmin_id: 1)
+GroupMessage.create(groupname: "group3", bilateral: false)
+GroupMessage.create(groupname: "group4", bilateral: false)
+GroupMessage.create(groupname: "group4", bilateral: false)
 Message.create(body: "Hello",user_id: 1, group_message_id: 1)
 Message.create(body: "Hello",user_id: 2, group_message_id: 1)
 Message.create(body: "Hello",user_id: 3, group_message_id: 1)
