@@ -1,0 +1,46 @@
+<h4 class="ui  aligned medium icon header">
+  <i class="circular purple users icon"></i>
+  Friend(s) ( <%= @friend.count %>)
+</h4>
+
+
+
+<div class="ui centered cards">
+<% @friend.each do |g| %>
+  <div class="card">
+    <div class="content">
+      <img class="right floated mini ui image", id= "friendlist" src="https://robohash.org/<%=g["username"] %>">
+      <div class="header">
+      <%= link_to g["username"], user_path(g["username"].downcase) %>
+      </div>
+      <div class="meta">
+        <%= g["about"] %>
+      </div>
+      <div class="description">
+        <% if g["accept"] == 1 %>
+          Friend? maybe a stalker!!
+          <div class="extra content">
+      <div class="ui two buttons ">
+          <button class="ui button", disabled ><i class="check icon"></i>Friends</button>
+          <%= link_to "Break up!", friend_path(g["friend_id"]), method: :delete ,data: {confirm: "OK Minh chia tay?"}, class: "ui basic red button" , style:"margin: 2px"%>
+        <% else %>
+          <%= g["username"] %> is friend? Perhaps not.
+          <div class="extra content">
+      <div class="ui two buttons ">
+          <% if g["f_id"] !=  g["id"] %>
+          <%= link_to "Accept", friend_path(g["friend_id"]), method: :put ,data: {confirm: "Chac chua?, no' ga. keo` rang' chiu."}, class: "ui basic green button", style:"margin: 2px"%>
+          <%= link_to "Decline", friend_path(g["friend_id"]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
+          <% else %>
+            <button class="ui button", disabled ><i class="users icon"></i>Reqest pending</button>
+            <%= link_to "Undo request", friend_path(g["friend_id"]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
+          <% end %>
+          
+        <% end %>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  </div>
+

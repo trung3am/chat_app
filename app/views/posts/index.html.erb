@@ -1,0 +1,45 @@
+<h4 class="ui  aligned medium icon header">
+<div style="margin: 5px" class="ui one column stackable center aligned page grid">
+  <img src="https://robohash.org/<%=current_user.username %>" style= "width:250px;height:250px;">
+  </div>
+    New Feeds
+</h4>
+<div class="ui fluid card",style="margin: 10px ">
+<%= form_with(scope: :post, html:{class: "ui form", role: "form"}, url:posts_path, method: :create) do |f|%>
+<%=f.hidden_field :user_id, value: current_user.id%>
+<%=f.text_area :body, placeholder:"What's on your mind, #{current_user.username}?", rows: 4 %>
+<%= f.button "Post", class:"ui basic purple button", style:"margin: 15px"%>
+<% end %>
+</div>
+
+<% @posts.each do |p| %>
+<div class="ui fluid card",style="margin: 10px ">
+<div class="ui feed">
+  <div class="event">
+    <div class="label", style= 'margin: 10px'>
+      <img src="https://robohash.org/<%=p.user.username%>">
+    </div>
+    <div class="content">
+      <div class="summary">
+      <%= link_to p.user.username, user_path(p.user.username) %>
+        <div class="date">
+          <%= time_ago_in_words(p.created_at) %> ago
+        </div>
+      </div>
+      <div class="extra text">
+        <%= simple_format(p.body) %>
+      </div>
+      <div class="meta">
+        <a class="like">
+          <i class="edit icon"></i> <%= link_to "Edit", edit_post_path(p.id) %>
+          <%= link_to "Delete", post_path(p.id), method: :delete %>
+        </a>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+<% end %>
+<h4 class="ui  aligned medium icon header">
+  ...
+</h4>

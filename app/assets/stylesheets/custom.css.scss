@@ -1,9 +1,13 @@
 @import "semantic-ui";
 .chatbox{
-  height: 450px;
+  height: 420px;
 }
 #messages{
   height: 15em;
+  overflow: auto;
+}
+#group-display{
+  height: 40em;
   overflow: auto;
 }
 .input{
@@ -13,4 +17,8 @@
 }
 #area{
   height: 1em;
+}
+#friendlist{
+  height: 10em;
+  width: 10em;
 }

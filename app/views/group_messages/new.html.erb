@@ -1,0 +1,32 @@
+<h2 class="ui center aligned medium icon header"> 
+  <i class="circular purple users icon"></i>
+  Creating group chat
+</h2>
+  <div class="ui center aligned medium icon header"> 
+<%= form_with(scope: :group_message, html:{class: "ui form", role: "form"}, url:group_messages_path, method: :create) do |f|%>
+  <%=f.hidden_field :bilateral , value: false %>
+  <%= f.text_field :groupname , placeholder: "Group name"%>
+  <div class="field", style="margin: 20px">
+  <h3>Add your friend here:</h3>
+
+  <div class="ui cards">
+  <%= f.collection_check_boxes(:id, User.where(id: @friends_id), :id, :username) do |b| %>
+  <div class="card">
+    <div class="content">
+      <img class="right floated mini ui image" id= "friendlist" src="https://robohash.org/<%=b.text %>">
+      <div class="header">
+        <%= link_to  b.text, user_path(b.text) %>
+      </div>
+      <div class="description">
+      <%=  b.check_box %>
+    </div>
+  </div>
+    </div>
+      <% end %>
+      </div>
+</div>
+    <div class="ui center aligned medium icon header">
+    <%= f.button "Create group", class:"ui basic blue button"%>
+    </div>
+    ...
+<% end %>

@@ -1,0 +1,13 @@
+<h4 class="ui  aligned medium icon header">
+<div style="margin: 5px" class="ui one column stackable center aligned page grid">
+  <img src="https://robohash.org/<%=current_user.username %>" style= "width:250px;height:250px;">
+  </div>
+    Editing post
+</h4>
+<div class="ui fluid card",style="margin: 10px ">
+<%= form_with(scope: :post, html:{class: "ui form", role: "form"}, url:post_path, method: :put) do |f|%>
+<%=f.hidden_field :user_id, value: current_user.id%>
+<%=f.text_area :body, placeholder:"What's on your mind, #{current_user.username}?", rows: 4 %>
+<%= f.button "Resubmit", class:"ui basic purple button", style:"margin: 15px"%>
+<% end %>
+</div>

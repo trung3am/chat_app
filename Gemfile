@@ -24,7 +24,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'hirb'
 gem 'semantic-ui-sass'
 gem 'jquery-rails'
-gem 'composite_primary_keys', '~> 13.0'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

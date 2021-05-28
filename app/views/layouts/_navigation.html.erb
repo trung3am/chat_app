@@ -1,25 +1,18 @@
-<a class="item">
-        <%= link_to 'Chatroom', root_path, class:"item" %>
-      </a>
-      <a class="item">
-        Messages
-      </a>
-      <a class="item">
-        Friends
-      </a>
+    <% if logged_in? %>
+      <%= link_to 'New feeds', feed_path ,class:"item"%>
+      <%= link_to 'Lobby', group_message_path('1') ,class:"item"%>
+      <%= link_to 'Message', root_path ,class:"item"%>
+      <%= link_to 'Friends', friends_path ,class:"item"%>
+      <%= link_to 'New Group', new_group_message_path ,class:"item"%>
+
+      <% end %>
       <div class="right menu">
-        <div class="ui dropdown item">
-          Account <i class="dropdown icon"></i>
-          <div class="menu">
-          <% if !logged_in? %>
-             <%= link_to 'Log in', login_path ,class:"item"%>
-          <% else %>
+        <% if logged_in? %>
+              <%= link_to 'Profile', user_path(current_user.username), class:"item" %>
               <%= link_to 'Log out', logout_path ,class:"item", method: :delete %>
+
+            <% else %>
+              <%= link_to 'Log in', login_path ,class:"item"%>
             <% end %>
-            <a class="item">Sign up</a>
-          </div>
-        </div>
-        <div class="item">
-            <div class="ui primary button">Sign Up</div>
-        </div>
+                
       </div>

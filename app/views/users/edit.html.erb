@@ -1,0 +1,37 @@
+<h4 class="ui  aligned medium icon header">
+  <i class="circular purple edit icon"></i>
+  <%= current_user.username %>'s Profile Editing
+</h4>
+
+<div class="middle aligned column">
+            <h4 class ="center aligned"> Edit profile </h4>
+      <%= form_with(model: current_user, html: {class: "ui form", role: "form"}, local: true) do |f| %>
+        <div class="field">
+            <%= f.hidden_field :username, value: current_user.username%>
+        </div>
+        <div class="field">
+          <%= f.label :about, "About" %>
+          <div class="ui left icon input">
+            <%= f.text_area  :about, placeholder: "about", rows: 3%>
+
+          </div>
+        </div>
+        <div class="field">
+          <%= f.label :email, "email" %>
+          <div class="ui left icon input">
+            <%= f.text_field :email, placeholder: "email"%>
+            <i class="envelope icon"></i>
+          </div>
+        </div>
+        <div class="field">
+          <%= f.label :password, "Password" %>
+          <div class="ui left icon input">
+            <%= f.password_field :password, placeholder:"pwd" %>
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <%= f.button "Update profile" , class: "ui purple submit button" %>
+        
+      <% end %>
+    </div>
+  

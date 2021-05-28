@@ -2,7 +2,11 @@
 <div class="event">
   <div class="content">
     <div class="summary">
-      <em><%=message.user.username %></em>:  <%= message.body %>
+      <% if message.initiate %>
+        <i><%= message.body %></i>
+      <% else %>
+      <em><img src="https://robohash.org/<%=message.user.username %>" style= "width:30px;height:30px;"><%=message.user.username %></em>:  <%= message.body %>
+      <% end %>
     </div>
   </div>  
 </div>

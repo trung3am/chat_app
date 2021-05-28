@@ -16,7 +16,10 @@ function sub(element){
     
       received(data) {
         $(`#side-${data.gr}-mess`).html(data.dp);
+        $(`#side-${data.gr}-mess`).prepend("*")
         var temp = $(`#${data.gr}`).html();
+        
+
         $("div").remove(`#${data.gr}`);
         $('#group-display').prepend(temp);
       }
