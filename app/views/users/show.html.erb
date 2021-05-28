@@ -1,6 +1,6 @@
 <h4 class="ui  aligned medium icon header">
 <div style="margin: 5px" class="ui one column stackable center aligned page grid">
-  <img src="https://robohash.org/<%=current_user.username %>" style= "width:250px;height:250px;">
+  <img src="https://robohash.org/<%=@user.username.downcase %>" style= "width:250px;height:250px;">
   </div>
   <%= @user.username %>'s Profile
   </h4>
@@ -45,11 +45,11 @@
 <div class="ui feed">
   <div class="event">
     <div class="label", style= 'margin: 10px'>
-      <img src="https://robohash.org/<%=p.user.username%>">
+      <img src="https://robohash.org/<%=p.user.username.downcase%>">
     </div>
     <div class="content">
       <div class="summary">
-      <%= link_to p.user.username, user_path(p.user.username) %>
+      <%= link_to p.user.username, user_path(p.user.username.downcase) %>
         <div class="date">
           <%= time_ago_in_words(p.created_at) %> ago
         </div>

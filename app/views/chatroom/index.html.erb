@@ -11,7 +11,7 @@
       <% if current_group.bilateral != true %>
         <%=link_to current_group.groupname, group_message_path(current_group.id), class:"ui primary fluid basic button" %>
       <% else %>
-        <%= link_to friend_name(current_group.groupname), user_path(friend_name(current_group.groupname)) , class:"ui primary basic button" ,style:"margin: 5px"%>
+        <%= link_to friend_name(current_group.groupname), user_path(friend_name(current_group.groupname).downcase) , class:"ui primary basic button" ,style:"margin: 5px"%>
       <% end %>    
       </h4></div>
     </div>
@@ -50,7 +50,7 @@
           <% if display.initiate %>
             <i id= "side-<%= display.group_message_id%>-mess"><%= display.body %></i>
             <% else %>
-            <em id= "side-<%= display.group_message_id%>-mess"><img src="https://robohash.org/<%=display.user.username %>" style= "width:30px;height:30px;"><%= display.user.username %> : <%= display.body %></em>
+            <em id= "side-<%= display.group_message_id%>-mess"><img src="https://robohash.org/<%=display.user.username.downcase %>" style= "width:30px;height:30px;"><%= display.user.username %> : <%= display.body %></em>
           <% end %>
           </a>
           <% end %>

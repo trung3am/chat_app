@@ -5,7 +5,7 @@
       <% if message.initiate %>
         <i><%= message.body %></i>
       <% else %>
-      <em><img src="https://robohash.org/<%=message.user.username %>" style= "width:30px;height:30px;"><%=message.user.username %></em>:  <%= message.body %>
+      <em><img src="https://robohash.org/<%=message.user.username.downcase %>" style= "width:30px;height:30px;"><%=message.user.username %></em>:  <%= message.body %>
       <% end %>
     </div>
   </div>  

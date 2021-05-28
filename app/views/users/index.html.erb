@@ -7,7 +7,7 @@
   <tbody>
   <% @users.each do |u| %>
     <tr>
-      <td data-label="Username"> <%=link_to u.username , user_path(u.username)%>  </td>
+      <td data-label="Username"> <%=link_to u.username , user_path(u.username.downcase)%>  </td>
       <td data-label="Email"> <%= u.email%> </td>
       <td data-label="Joined date">  <%= u.created_at.strftime("%d of %B, %Y")%> </td>
     </tr>

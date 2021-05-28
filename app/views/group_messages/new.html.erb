@@ -15,7 +15,7 @@
     <div class="content">
       <img class="right floated mini ui image" id= "friendlist" src="https://robohash.org/<%=b.text %>">
       <div class="header">
-        <%= link_to  b.text, user_path(b.text) %>
+        <%= link_to  b.text, user_path(b.text.downcase) %>
       </div>
       <div class="description">
       <%=  b.check_box %>

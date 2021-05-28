@@ -20,7 +20,7 @@
       <% if g.id == @group.groupadmin_id %>
       <i class='chess queen icon'></i>
         <% end %>
-        <%= link_to g.username, user_path(g.username) %>
+        <%= link_to g.username, user_path(g.username.downcase) %>
       </div>
       <div class="meta">
         <%= g.about %>

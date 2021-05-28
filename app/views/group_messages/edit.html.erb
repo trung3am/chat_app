@@ -15,7 +15,7 @@
     <div class="content">
       <img class="right floated mini ui image", id= "friendlist", src="https://robohash.org/<%=g["username"] %>" >
       <div class="header">
-        <%= link_to g["username"], user_path(g["username"]) %>
+        <%= link_to g["username"], user_path(g["username"].downcase) %>
       </div>
       <div class="meta">
         <%= g["about"] %>
