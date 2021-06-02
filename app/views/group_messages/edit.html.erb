@@ -3,37 +3,30 @@
   <i class="circular purple users icon"></i>
   Add to group
 </h2>
-
-
-<h2> </h2>
-
 <div class="ui centered cards">
-<% @friend.each do |g| %>
-<% if !@gusers.ids.include?(g["id"].to_i) %>
-
-  <div class="card">
-    <div class="content">
-      <img class="right floated mini ui image", id= "friendlist", src="https://robohash.org/<%=g["username"] %>" >
-      <div class="header">
-        <%= link_to g["username"], user_path(g["username"].downcase) %>
+  <% @friend.each do |g| %>
+    <% if !@gusers.ids.include?(g["id"].to_i) %>
+      <div class="card">
+        <div class="content">
+          <img class="right floated mini ui image", id= "friendlist", src="https://robohash.org/<%=g["username"] %>" >
+          <div class="header">
+            <%= link_to g["username"], user_path(g["username"].downcase) %>
+          </div>
+          <div class="meta">
+            <%= g["about"] %>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons ">
+      <%= link_to "Add to group", group_message_path(g["id"],@group.id), method: :put , class: "ui basic green button",style:"margin: 2px"%>
+          </div>
+        </div>
       </div>
-      <div class="meta">
-        <%= g["about"] %>
-      </div>
-    </div>
-    <div class="extra content">
-      <div class="ui two buttons ">
-  <%= link_to "Add to group", group_message_path(g["id"],@group.id), method: :put , class: "ui basic green button",style:"margin: 2px"%>
-  </div>
-  </div>
-  </div>
+    <% end %>
   <% end %>
-  <% end %>
-  </div>
-  
-
-  <div class="ui aligned icon header">
+</div>  
+<div class="ui aligned icon header">
   <% if current_user.id == @group.groupadmin_id %>
-  <%= link_to "Delete group", group_message_path ,method: :delete, class:"negative ui button",style:"margin: 2px" %>
-<% end %>
+    <%= link_to "Delete group", group_message_path ,method: :delete, class:"negative ui button",style:"margin: 2px" %>
+  <% end %>
 </div>

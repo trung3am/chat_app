@@ -5,72 +5,69 @@
   <%= @user.username %>'s Profile
   </h4>
 <div style="margin: 5px" class="ui one column stackable center aligned page grid">
-        <% if @user.id != current_user.id %>  
-            <% if  friend_list.where(user_id: @user.id).empty? && friend_list.where(f_id: @user.id).empty? %>
-            <%= link_to "Add friend", friends_path(@user.id), method: :create , class: "ui basic green button"%>
-            <% else %>
-              <% if ! friend_list.where(user_id: @user.id).or(friend_list.where(f_id: @user.id)).and(friend_list.where(accept: false)).empty? %>
-                <% if friend_list.where(user_id: @user.id).empty? %>
-                <button class="ui mini button" disabled ><i class="users huge icon" ></i>Request pending</button>
-                <%= link_to "Undo request", friend_path(friend_list.where(f_id: @user.id).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
-                <% else %>
-                <%= link_to "Accept", friend_path(friend_list.where(user_id: @user.id).ids[0]), method: :put ,data: {confirm: "Chac chua?, no' ga. keo` rang' chiu."}, class: "ui basic green button", style:"margin: 2px"%>  
-                <%= link_to "Decline", friend_path(friend_list.where(user_id: @user.id).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
-                <% end %>
-                
-              <% else %>
-            <button class="ui mini button" disabled><i class="check icon"></i>Friends</button>
-            <%= link_to "Break up!", friend_path(friend_list.where(user_id: @user.id).or(friend_list.where(f_id: @user.id)).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
-              <% end %>    
-            <% end %>
+  <% if @user.id != current_user.id %>  
+    <% if  friend_list.where(user_id: @user.id).empty? && friend_list.where(f_id: @user.id).empty? %>
+      <%= link_to "Add friend", friends_path(@user.id), method: :create , class: "ui basic green button"%>
+    <% else %>
+      <% if ! friend_list.where(user_id: @user.id).or(friend_list.where(f_id: @user.id)).and(friend_list.where(accept: false)).empty? %>
+        <% if friend_list.where(user_id: @user.id).empty? %>
+          <button class="ui mini button" disabled ><i class="users huge icon" ></i>Request pending</button>
+          <%= link_to "Undo request", friend_path(friend_list.where(f_id: @user.id).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
         <% else %>
-          <%= link_to "Update profile", edit_user_path(current_user.username), class: "ui basic info button" %>
-        <% end %>
-  </div>
-
+          <%= link_to "Accept", friend_path(friend_list.where(user_id: @user.id).ids[0]), method: :put ,data: {confirm: "Chac chua?, no' ga. keo` rang' chiu."}, class: "ui basic green button", style:"margin: 2px"%>  
+          <%= link_to "Decline", friend_path(friend_list.where(user_id: @user.id).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
+        <% end %>  
+      <% else %>
+        <button class="ui mini button" disabled><i class="check icon"></i>Friends</button>
+        <%= link_to "Break up!", friend_path(friend_list.where(user_id: @user.id).or(friend_list.where(f_id: @user.id)).ids[0]), method: :delete ,data: {confirm: "Chac' chua?"}, class: "ui basic red button", style:"margin: 2px"%>
+      <% end %>    
+    <% end %>
+  <% else %>
+    <%= link_to "Update profile", edit_user_path(current_user.username), class: "ui basic info button" %>
+  <% end %>
+</div>
 <% if @user.about != nil %>
   <h5 class="ui  aligned medium icon header">
   About me: <%= @user.about %> </h5>
 <% end %>
 <% if @user.id == current_user.id %>  
-<div class="ui fluid card", style="margin: 10px ">
-<%= form_with(scope: :post, html:{class: "ui form", role: "form"}, url:posts_path, method: :create) do |f|%>
-<%=f.hidden_field :user_id, value: @user.id%>
-<%=f.text_area :body, placeholder:"Post something on your wall?", rows: 4 %>
-<%= f.button "Post", class:"ui basic purple button", style:"margin: 15px"%>
+  <div class="ui fluid card", style="margin: 10px ">
+  <%= form_with(scope: :post, html:{class: "ui form", role: "form"}, url:posts_path, method: :create) do |f|%>
+  <%=f.hidden_field :user_id, value: @user.id%>
+  <%=f.text_area :body, placeholder:"Post something on your wall?", rows: 4 %>
+  <%= f.button "Post", class:"ui basic purple button", style:"margin: 15px"%>
 <% end %>
 </div>
 <% @posts.each do |p| %>
-<div class="ui fluid card",style="margin: 10px ">
-<div class="ui feed">
-  <div class="event">
-    <div class="label", style= 'margin: 10px'>
-      <img src="https://robohash.org/<%=p.user.username.downcase%>">
-    </div>
-    <div class="content">
-      <div class="summary">
-      <%= link_to p.user.username, user_path(p.user.username.downcase) %>
-        <div class="date">
-          <%= time_ago_in_words(p.created_at) %> ago
+  <div class="ui fluid card",style="margin: 10px ">
+    <div class="ui feed">
+      <div class="event">
+        <div class="label", style= 'margin: 10px'>
+          <img src="https://robohash.org/<%=p.user.username.downcase%>">
         </div>
+        <div class="content">
+          <div class="summary">
+          <%= link_to p.user.username, user_path(p.user.username.downcase) %>
+            <div class="date">
+              <%= time_ago_in_words(p.created_at) %> ago
+            </div>
+          </div>
+          <div class="extra text">
+            <%= simple_format(p.body) %>
+          </div>
+          <div class="meta">
+            <a class="like">
+              <i class="edit icon"></i> <%= link_to "Edit", edit_post_path(p.id) %>
+              <%= link_to "Delete", post_path(p.id), method: :delete %>
+            </a>
+          </div>
       </div>
-      <div class="extra text">
-        <%= simple_format(p.body) %>
-      </div>
-      <div class="meta">
-        <a class="like">
-          <i class="edit icon"></i> <%= link_to "Edit", edit_post_path(p.id) %>
-          <%= link_to "Delete", post_path(p.id), method: :delete %>
-        </a>
-      </div>
+    </div>
+    </div>
   </div>
-</div>
-</div>
-</div>
 <% end %>
 
 <h5 class="ui aligned icon header">
   <%= link_to "Delete account", user_path(current_user), method: :delete , style:"margin-bottom: 20px ", class: "ui negative  button "%>
-   </h5>
-
-<% end %>
+</h5>
+  <% end %>

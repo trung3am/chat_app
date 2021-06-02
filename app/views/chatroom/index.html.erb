@@ -6,25 +6,24 @@
   <div class="twelve wide column">
     <div class="ui fluid raised card chatbox">
       <div class="row ui feed">
-      <div class="ui feed", id = "group-messages", data-channel-subscribe = "ChatroomChannel", data_group_id ="<%= current_group.id %>"  >
-
-      <% if current_group.bilateral != true %>
-        <%=link_to current_group.groupname, group_message_path(current_group.id), class:"ui primary fluid basic button" %>
-      <% else %>
-        <%= link_to friend_name(current_group.groupname), user_path(friend_name(current_group.groupname).downcase) , class:"ui primary basic button" ,style:"margin: 5px"%>
-      <% end %>    
-      </h4></div>
-    </div>
+        <div class="ui feed", id = "group-messages", data-channel-subscribe = "ChatroomChannel", data_group_id ="<%= current_group.id %>">
+          <% if current_group.bilateral != true %>
+           <%=link_to current_group.groupname, group_message_path(current_group.id), class:"ui primary fluid basic button" %>
+          <% else %>
+           <%= link_to friend_name(current_group.groupname), user_path(friend_name(current_group.groupname).downcase) , class:"ui primary basic button" ,style:"margin: 5px"%>
+          <% end %>    
+        </div>
+      </div>
       <div class="content", id= 'messages'>
         <div class="ui feed" id="message-container">
           <%= render @messages %>
         </div>
       </div>
       <div class="extra content">
-      <%= form_for(@message, html: {class:"ui reply form", role: "mess form"}, url: message_path, remote: true) do |f| %>
+        <%= form_for(@message, html: {class:"ui reply form", role: "mess form"}, url: message_path, remote: true) do |f| %>
           <div class="field">
             <div class="ui fluid icon input ">
-            <%=f.hidden_field :group_message_id, value: current_group.id %>
+              <%=f.hidden_field :group_message_id, value: current_group.id %>
               <%= f.text_area :body, placeholder: "Say something..." , rows: 2 %>
               <%=f.button '<i class= "bordered inverted purple edit icon"></i>'.html_safe %>
             </div>
@@ -32,33 +31,34 @@
         <% end %>
       </div>
     </div>
-    </div>
+  </div>
   <div class="four wide column">
     <div class="ui fluid raised card chatbox">
       <div class="ui fluid vertical menu" , id = "group-display", data-channel-subscribe = "DisplayChannel", data_group_id ="<%= @group %>">
-          <% @displays.each do |display| %>
-      <div class="content", id = "<%= display.group_message_id%>" , data-channel-subscribe = "DisplayChannel", attr ="<%= display.group_message_id %>">
-        <%= form_with(scope: :session, url: sessiondisplay_path, method: :update )do |m| %>
-          <%=m.hidden_field :group_message_id, value: display.group_message.id %>
-          <a class="item">
-          <h4 class="ui header">
-          <% if display.group_message.bilateral %>
-          <%=m.submit friend_name(display.group_message.groupname),  class:"ui primary fluid basic button" %></h4>  
-          <% else %>
-          <%=m.submit  display.group_message.groupname, class:"ui primary fluid basic button" %></h4>
-          <% end %>
-          <% if display.initiate %>
-            <i id= "side-<%= display.group_message_id%>-mess"><%= display.body %></i>
-            <% else %>
-            <em id= "side-<%= display.group_message_id%>-mess"><img src="https://robohash.org/<%=display.user.username.downcase %>" style= "width:30px;height:30px;"><%= display.user.username %> : <%= display.body %></em>
-          <% end %>
-          </a>
-          <% end %>
+        <% @displays.each do |display| %>
+          <div class="content", id = "<%= display.group_message_id%>" , data-channel-subscribe = "DisplayChannel", attr ="<%= display.group_message_id %>">
+            <%= form_with(scope: :session, url: sessiondisplay_path, method: :update )do |m| %>
+              <%=m.hidden_field :group_message_id, value: display.group_message.id %>
+              <a class="item">
+                <h4 class="ui header">
+                  <% if display.group_message.bilateral %>
+                    <%=m.submit friend_name(display.group_message.groupname),  class:"ui primary fluid basic button" %></h4>  
+                  <% else %>
+                    <%=m.submit  display.group_message.groupname, class:"ui primary fluid basic button" %>
+                  <% end %>
+                </h4>
+                <% if display.initiate %>
+                  <i id= "side-<%= display.group_message_id%>-mess"><%= display.body %></i>
+                <% else %>
+                  <em id= "side-<%= display.group_message_id%>-mess"><img src="https://robohash.org/<%=display.user.username.downcase %>" style= "width:30px;height:30px;"><%= display.user.username %> : <%= display.body %></em>
+                <% end %>
+              </a>
+            <% end %>
           </div>
-          <% end %>
-      </div>
-        </div>
+        <% end %>
       </div>
     </div>
+  </div>
+</div>
 
 </div>  

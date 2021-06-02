@@ -1,18 +1,15 @@
-    <% if logged_in? %>
-      <%= link_to 'New feeds', feed_path ,class:"item"%>
-      <%= link_to 'Lobby', group_message_path('1') ,class:"item"%>
-      <%= link_to 'Message', root_path ,class:"item"%>
-      <%= link_to 'Friends', friends_path ,class:"item"%>
-      <%= link_to 'New Group', new_group_message_path ,class:"item"%>
-
-      <% end %>
-      <div class="right menu">
-        <% if logged_in? %>
-              <%= link_to 'Profile', user_path(current_user.username.downcase), class:"item" %>
-              <%= link_to 'Log out', logout_path ,class:"item", method: :delete %>
-
-            <% else %>
-              <%= link_to 'Log in', login_path ,class:"item"%>
-            <% end %>
-                
-      </div>
+<% if logged_in? %>
+  <%= link_to 'New feeds', feed_path ,class:"item"%>
+  <%= link_to 'Lobby', group_message_path('1') ,class:"item"%>
+  <%= link_to 'Message', root_path ,class:"item"%>
+  <%= link_to 'Friends', friends_path ,class:"item"%>
+  <%= link_to 'New Group', new_group_message_path ,class:"item"%>
+<% end %>
+<div class="right menu">
+  <% if logged_in? %>
+    <%= link_to 'Profile', user_path(current_user.username.downcase), class:"item" %>
+    <%= link_to 'Log out', logout_path ,class:"item", method: :delete %>
+  <% else %>
+    <%= link_to 'Log in', login_path ,class:"item"%>
+  <% end %>          
+</div>

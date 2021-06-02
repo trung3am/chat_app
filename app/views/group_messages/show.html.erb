@@ -4,56 +4,54 @@
   <% else %>
     Group chat:  <%= @group.groupname %> 
   <% end %>
-
   <i class="circular purple users icon"></i>
   Group member(s) (<%=@count%>)
 </h2>
 <div class="ui centered cards">
-<%= link_to "Add member", edit_group_message_path(@group.id), class: "ui basic blue button",style:"margin: 2px"%>
+  <%= link_to "Add member", edit_group_message_path(@group.id), class: "ui basic blue button",style:"margin: 2px"%>
 </div>
 <div class="ui centered cards">
-<% @gusers.each do |g| %>
-  <div class="card">
-    <div class="content">
-      <img class="right floated mini ui image", id= "friendlist" src="https://robohash.org/<%=g.username %>">
-      <div class="header">
-      <% if g.id == @group.groupadmin_id %>
-      <i class='chess queen icon'></i>
-        <% end %>
-        <%= link_to g.username, user_path(g.username.downcase) %>
-      </div>
-      <div class="meta">
-        <%= g.about %>
-      </div>
-    </div>
-    <div class="extra content">
-      <div class="ui two buttons ">
-          <% if g.id != current_user.id %>  
-            <% if  friend_list.where(user_id: g.id).empty? && friend_list.where(f_id: g.id).empty? %>
-            <%= link_to "Add friend", friends_path(g.id), method: :create , class: "ui basic green button",style:"margin: 2px"%>
-            
-            <% else %>
-              <% if ! friend_list.where(user_id: g.id).or(friend_list.where(f_id: g.id)).and(friend_list.where(accept: false)).empty? %>
-                <button class="ui button" disabled,style="margin: 2px"><i class="users icon"></i>Request pending</button>    
-              <% else %>
-              <button class="ui button" disabled,style="margin: 2px"><i class="check icon"></i>Friends</button>
-              <% end %>    
-            <% end %>
-          <% else %>
-            <% if @group.groupadmin_id != current_user.id %>
-              <%= link_to "Leave group", message_path(current_user.id) ,method: :delete, class:"negative basic ui button",style:"margin: 2px" %>    
-            <% end %>
+  <% @gusers.each do |g| %>
+    <div class="card">
+      <div class="content">
+        <img class="right floated mini ui image", id= "friendlist" src="https://robohash.org/<%=g.username %>">
+        <div class="header">
+          <% if g.id == @group.groupadmin_id %>
+            <i class='chess queen icon'></i>
           <% end %>
-        <% if current_user.id == @group.groupadmin_id && current_user.id != g.id %>
-        <%= link_to "Remove from group", message_path(g.id) ,method: :delete, class:"negative basic ui button",style:"margin: 2px" %>
-      <% end %>
+          <%= link_to g.username, user_path(g.username.downcase) %>
+        </div>
+        <div class="meta">
+          <%= g.about %>
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="ui two buttons ">
+            <% if g.id != current_user.id %>  
+              <% if  friend_list.where(user_id: g.id).empty? && friend_list.where(f_id: g.id).empty? %>
+                <%= link_to "Add friend", friends_path(g.id), method: :create , class: "ui basic green button",style:"margin: 2px"%>  
+              <% else %>
+                <% if ! friend_list.where(user_id: g.id).or(friend_list.where(f_id: g.id)).and(friend_list.where(accept: false)).empty? %>
+                  <button class="ui button" disabled,style="margin: 2px"><i class="users icon"></i>Request pending</button>    
+                <% else %>
+                  <button class="ui button" disabled,style="margin: 2px"><i class="check icon"></i>Friends</button>
+                <% end %>    
+              <% end %>
+            <% else %>
+              <% if @group.groupadmin_id != current_user.id %>
+                <%= link_to "Leave group", message_path(current_user.id) ,method: :delete, class:"negative basic ui button",style:"margin: 2px" %>    
+              <% end %>
+            <% end %>
+          <% if current_user.id == @group.groupadmin_id && current_user.id != g.id %>
+            <%= link_to "Remove from group", message_path(g.id) ,method: :delete, class:"negative basic ui button",style:"margin: 2px" %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
   <% end %>
-  </div>
+</div>
 <% if current_user.id == @group.groupadmin_id %>
   <div class="ui aligned icon header">
-  <%= link_to "Delete group", group_message_path ,method: :delete, class:"negative ui button",style:"margin: 2px" %>
-</div>
+    <%= link_to "Delete group", group_message_path ,method: :delete, class:"negative ui button",style:"margin: 2px" %>
+  </div>
 <% end %>
