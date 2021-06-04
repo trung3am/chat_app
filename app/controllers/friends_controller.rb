@@ -2,9 +2,9 @@ class FriendsController < ApplicationController
   before_action :require_user
   def index
     @friend = User.execute_sql("select distinct users.id, f_id, username, about, accept, friends.id as friend_id 
-      from users inner join friends on users.id == friends.f_id where friends.user_id = ? 
+      from users inner join friends on users.id = friends.f_id where friends.user_id = ? 
       union select distinct users.id, f_id, username, about, accept, friends.id as friend_id  from users inner join 
-      friends on users.id == friends.user_id where friends.f_id = ?  order by username", current_user.id, current_user.id)
+      friends on users.id = friends.user_id where friends.f_id = ?  order by username", current_user.id, current_user.id)
   end
 
 
